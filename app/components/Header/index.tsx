@@ -13,8 +13,12 @@ export const Header = () => {
         </div>
         <nav className="header-title">
           <ul>
-            <li>Movies</li>
-            <li>Shows TV</li>
+            <li>
+              <a href="#">Movies</a>
+            </li>
+            <li>
+              <a href="">Shows TV</a>
+            </li>
           </ul>
         </nav>
       </div>

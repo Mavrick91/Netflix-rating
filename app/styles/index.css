@@ -9,6 +9,7 @@ body {
 
 main {
   padding-top: var(--header-height);
+  height: 100%;
 }
 
 .inner-container {
