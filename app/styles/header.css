@@ -32,13 +32,49 @@
 
 .header-content {
   z-index: 999;
-  width: 1200px;
+  width: 60%;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
 }
 
 .header-title {
   font-family: "Nunito Sans", sans-serif;
   font-size: 1rem;
+  margin-left: 48px;
+}
+
+.header-title ul {
+  display: flex;
+}
+
+.header-title li {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  font-size: 0.875rem;
+  transition: background-color 0.3s;
+}
+
+.header-title li:first-child {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.header-title li:not(:first-child) {
+  margin-left: 20px;
+}
+
+.header-title li:not(:first-child):hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
