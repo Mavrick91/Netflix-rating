@@ -77,3 +77,21 @@ h5 {
 h6 {
   font-size: 1rem;
 }
+
+ul {
+  list-style-type: none; /* Remove default bullets */
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
