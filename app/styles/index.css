@@ -1,0 +1,27 @@
+.container {
+  min-height: 100vh;
+  padding-top: 5rem;
+  background-color: rgb(0, 2, 18);
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  font-size: 80px;
+  letter-spacing: -0.02em;
+  color: white;
+  font-family: "Nunito Sans", sans-serif;
+  width: 58rem;
+  background: linear-gradient(
+    to right bottom,
+    rgb(255, 255, 255) 30%,
+    rgba(255, 255, 255, 0.38)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
