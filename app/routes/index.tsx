@@ -10,16 +10,18 @@ export const links = () => [
 
 const Index = () => {
   return (
-    <div className="container">
+    <>
       <Header />
       <main>
         <section className="inner-container">
-          <h1 className="heading">
-            The Ultimate Movie Rating Database and Review Site
-          </h1>
+          <div className="centered-heading-container">
+            <h1 className="heading">
+              The Ultimate Movie Rating Database and Review Site
+            </h1>
+          </div>
         </section>
       </main>
-    </div>
+    </>
   );
 };
 

@@ -37,6 +37,16 @@
   align-items: center;
 }
 
+.header-content::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .logo {
   display: flex;
   align-items: center;
