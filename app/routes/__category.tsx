@@ -1,10 +1,12 @@
-import { Header, links as headerLinks } from "~/components/Header";
+import { Outlet } from "@remix-run/react";
+import { links as cardLinks } from "~/components/Card";
+import Header, { links as headerLinks } from "~/components/Header";
 
 import styles from "~/styles/index.css";
-export default function Index() {
 
 export const links = () => [
   ...headerLinks(),
+  ...cardLinks(),
   { rel: "stylesheet", href: styles },
 ];
 
@@ -19,6 +21,8 @@ const Index = () => {
               The Ultimate Movie Rating Database and Review Site
             </h1>
           </div>
+
+          <Outlet />
         </section>
       </main>
     </>
