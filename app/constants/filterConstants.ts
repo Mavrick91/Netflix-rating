@@ -38,6 +38,7 @@ export const showTypes = [
   { value: "series", label: "Series" },
 ];
 export const languageShow = [
+  { value: "", label: "All" },
   { value: "en", label: "English" },
   { value: "sp", label: "Spanish" },
   { value: "fr", label: "French" },
@@ -52,6 +53,7 @@ export const languageShow = [
 ];
 
 export const genresShow = [
+  { value: "", label: "All" },
   { value: 1, label: "Biography" },
   { value: 10402, label: "Music" },
   { value: 10749, label: "Romance" },
