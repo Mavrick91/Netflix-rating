@@ -1,6 +1,6 @@
 .inner-movie {
   display: flex;
-  gap: 16px;
+  gap: 32px;
   flex-wrap: wrap;
   width: 100%;
 }
@@ -16,7 +16,7 @@
     rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 0.05) 100%
   );
-  width: 170px;
+  width: 206px;
 }
 
 .movie-card::before {
@@ -36,13 +36,20 @@
   -webkit-mask-composite: xor;
 }
 
+.movie-card__image {
+  min-height: 317px;
+}
 .movie-card__image img {
   height: 100%;
+  width: 100%;
 }
 
 .movie-card__content {
   color: white;
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .movie-card__title {
