@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useState } from "react";
 import starIcon from "~/assets/icons/star.png";
 import styles from "~/styles/card.css";
 import type { MoviesSeries } from "~/types/moviesSeries";
@@ -10,6 +11,8 @@ import {
 import { removeHashAtBeginning } from "~/utils/string";
 import infoIcon from "~/assets/icons/info.png";
 import playIcon from "~/assets/icons/play-button.png";
+import VideoPlayer from "../VideoPlayer";
+import Modal from "../Modal";
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
@@ -18,6 +21,8 @@ type Props = {
 };
 
 const Card: FC<Props> = ({ items }) => {
+  const [trailerUrl, setTrailerUrl] = useState("");
+
   return (
     <div className="inner-movie">
       {items.map((item) => {
@@ -39,9 +44,17 @@ const Card: FC<Props> = ({ items }) => {
                   <div className="movie-card__image--hover-content-option">
                     <img src={infoIcon} alt="Info" />
                   </div>
-                  <div className="movie-card__image--hover-content-option">
-                    <img src={playIcon} alt="trailer" />
-                  </div>
+                  {item.youtubeTrailerVideoLink && (
+                    <button
+                      onClick={() =>
+                        setTrailerUrl(item.youtubeTrailerVideoLink)
+                      }
+                    >
+                      <div className="movie-card__image--hover-content-option">
+                        <img src={playIcon} alt="trailer" />
+                      </div>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -70,6 +83,11 @@ const Card: FC<Props> = ({ items }) => {
           </div>
         );
       })}
+      {trailerUrl && (
+        <Modal handleClose={() => setTrailerUrl("")}>
+          <VideoPlayer url={trailerUrl} />
+        </Modal>
+      )}
     </div>
   );
 };

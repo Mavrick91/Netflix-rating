@@ -1,22 +1,22 @@
 import type { LoaderArgs } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
 import customFetch from "~/api/fetch";
+import undoArrow from "~/assets/icons/undo-arrow.png";
 import Button, { links as buttonLinks } from "~/components/Button";
 import Card, { links as cardLinks } from "~/components/Card";
 import Header, { links as headerLinks } from "~/components/Header";
 import Select, { links as selectLinks } from "~/components/input/Select";
-import undoArrow from "~/assets/icons/undo-arrow.png";
-import styles from "~/styles/index.css";
-import type { MoviesSeries } from "~/types/moviesSeries";
-import { createQueryParams, getQueryStringsFromUrl } from "~/utils/object";
 import Text, { links as textLinks } from "~/components/input/Text";
-import { Form, useLoaderData, useParams } from "@remix-run/react";
-import { useMemo } from "react";
 import {
   genresShow,
   languageShow,
   showTypes,
   supportedCountries,
 } from "~/constants/filterConstants";
+import styles from "~/styles/index.css";
+import type { MoviesSeries } from "~/types/moviesSeries";
+import { createQueryParams, getQueryStringsFromUrl } from "~/utils/object";
+import { links as modalLinks } from "~/components/Modal";
 
 export const links = () => [
   ...headerLinks(),
@@ -24,6 +24,7 @@ export const links = () => [
   ...textLinks(),
   ...selectLinks(),
   ...cardLinks(),
+  ...modalLinks(),
   { rel: "stylesheet", href: styles },
 ];
 
