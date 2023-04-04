@@ -3,18 +3,21 @@ import styles from "~/styles/select.css";
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
-type Props = {
+type Props = React.DetailedHTMLProps<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
+  HTMLSelectElement
+> & {
   label: string;
-  items: Record<string, string>[];
+  items: Record<string, string | number>[];
 };
-const Select: FC<Props> = ({ items, label }) => {
+const Select: FC<Props> = ({ items, label, name }) => {
   return (
     <div className="select-container">
       <label htmlFor={label} className="select-label">
         {label}
       </label>
       <div className="select-border">
-        <select name={label} id={label} className="select-dropdown">
+        <select name={name} id={label} className="select-dropdown">
           {items.map((item) => {
             return (
               <option
