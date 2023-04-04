@@ -1,0 +1,26 @@
+.select-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-label {
+  color: #eeeffc;
+}
+.select-dropdown {
+  height: 44px;
+  background-color: #151621;
+  padding: 6px 12px;
+  border: none;
+  border-right: 6px solid transparent;
+  font-size: 0.825rem;
+  color: #eeeffc;
+  border-radius: 4px;
+}
+
+.select-border {
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #313248;
+  z-index: 10;
+  position: relative;
+}
