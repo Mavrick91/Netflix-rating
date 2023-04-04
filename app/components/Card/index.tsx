@@ -8,6 +8,8 @@ import {
   convertRuntimeToHoursAndMinutes,
 } from "~/utils/number";
 import { removeHashAtBeginning } from "~/utils/string";
+import infoIcon from "~/assets/icons/info.png";
+import playIcon from "~/assets/icons/play-button.png";
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
@@ -32,6 +34,16 @@ const Card: FC<Props> = ({ items }) => {
           <div className="movie-card" key={item.title}>
             <div className="movie-card__image">
               <img src={item.posterURLs[185]} alt="Movie" />
+              <div className="movie-card__image--hover">
+                <div className="movie-card__image--hover-content">
+                  <div className="movie-card__image--hover-content-option">
+                    <img src={infoIcon} alt="Info" />
+                  </div>
+                  <div className="movie-card__image--hover-content-option">
+                    <img src={playIcon} alt="trailer" />
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="movie-card__content">
               <div className="movie-card__title">
