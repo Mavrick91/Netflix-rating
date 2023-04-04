@@ -4,14 +4,19 @@ import Button, { links as buttonLinks } from "~/components/Button";
 import Card, { links as cardLinks } from "~/components/Card";
 import Header, { links as headerLinks } from "~/components/Header";
 import Select, { links as selectLinks } from "~/components/input/Select";
-import { supportedCountries } from "~/constants/supportedCountries";
-
+import undoArrow from "~/assets/icons/undo-arrow.png";
 import styles from "~/styles/index.css";
 import type { MoviesSeries } from "~/types/moviesSeries";
-import { createQueryParams } from "~/utils/object";
+import { createQueryParams, getQueryStringsFromUrl } from "~/utils/object";
 import Text, { links as textLinks } from "~/components/input/Text";
-import { useLoaderData, useParams } from "@remix-run/react";
+import { Form, useLoaderData, useParams } from "@remix-run/react";
 import { useMemo } from "react";
+import {
+  genresShow,
+  languageShow,
+  showTypes,
+  supportedCountries,
+} from "~/constants/filterConstants";
 
 export const links = () => [
   ...headerLinks(),
@@ -27,10 +32,12 @@ type LoaderData = {
   hasMore: boolean;
   nextCursor: string;
 };
-export const loader = async ({ params, request }: LoaderArgs) => {
+export const loader = async ({ request }: LoaderArgs) => {
+  const queryParams = getQueryStringsFromUrl(request.url);
   const queryString = createQueryParams({
     country: "us",
     services: "netflix,prime.buy,hulu",
+    ...queryParams,
   });
 
   const response = await customFetch(`/search/basic?${queryString}`);
@@ -44,28 +51,6 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 const Index = () => {
   const data = useLoaderData<LoaderData>();
   console.log("🚀 ~ data:", data);
-  const { categoryId } = useParams();
-
-  const placeholderText = useMemo(() => {
-    let placeholder = "Find a movie or series ...";
-
-    if (categoryId === "movies") {
-      placeholder = "Find a movie ...";
-    } else if (categoryId === "show-tv") {
-      placeholder = "Find a series ...";
-    }
-
-    return placeholder;
-  }, [categoryId]);
-
-  const selectItems = useMemo(
-    () => [
-      { value: "english", label: "English" },
-      { value: "spanish", label: "Spanish" },
-      { value: "french", label: "French" },
-    ],
-    []
-  );
 
   return (
     <>
@@ -79,14 +64,38 @@ const Index = () => {
           </div>
 
           <div className="category-page-container">
-            <form className="category-filter-form">
-              <Select label="Audio" items={selectItems} />
-              <Select label="Country" items={supportedCountries} />
-              <Text label="Title" placeholder={placeholderText} />
+            <Form className="category-filter-form">
+              <Select
+                label="Type"
+                name="show_type"
+                items={showTypes}
+                defaultValue={showTypes[0].value}
+              />
+              <Select
+                label="Language"
+                name="show_original_language"
+                defaultValue={languageShow[0].value}
+                items={languageShow}
+              />
+              <Select
+                label="Available in country"
+                name="country"
+                items={supportedCountries}
+                defaultValue="us"
+              />
+              <Select
+                label="Genre"
+                name="genre"
+                items={genresShow}
+                defaultValue="us"
+              />
+              <Button type="submit">Filter</Button>
+              <Button type="reset">
+                <img src={undoArrow} alt="Icon undo" />
+              </Button>
               <div />
-              <Button>Filter</Button>
-            </form>
-            <Card items={data.result} />;
+            </Form>
+            <Card items={data.result} />
           </div>
         </section>
       </main>
