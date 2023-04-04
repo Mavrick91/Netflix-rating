@@ -5,3 +5,11 @@ export function decodeString(str: string) {
     })
   );
 }
+
+export function removeHashAtBeginning(str: string): string {
+  if (str.charAt(0) === "#") {
+    return str.slice(1);
+  } else {
+    return str;
+  }
+}

@@ -1,11 +1,11 @@
-const customFetch = {
-  apilayer: (url: string) =>
-    fetch(`https://api.apilayer.com/unogs${url}`, {
-      headers: {
-        apikey: "duAJ5onHY4DqNeb3gPHPlRGDopqOoZjj",
-      },
-    }),
-  imdb: (url: string) => fetch(`https://imdb-api.com/API${url}`),
+const customFetch = (url: string) => {
+  return fetch(`https://streaming-availability.p.rapidapi.com/v2${url}`, {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "49f9a941f4mshfa3fccf89e77ff1p1b4c23jsn5ca7f27682af",
+      "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com",
+    },
+  });
 };
 
 export default customFetch;

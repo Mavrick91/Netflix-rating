@@ -1,7 +1,7 @@
 import styles from "~/styles/card.css";
 import { convertRuntimeToHoursAndMinutes } from "~/utils/number";
 import starIcon from "~/assets/icons/star.png";
-import { decodeString } from "~/utils/string";
+import { decodeString, removeHashAtBeginning } from "~/utils/string";
 import type { MoviesSeries } from "~/types/moviesSeries";
 import type { FC } from "react";
 
@@ -18,11 +18,11 @@ const Card: FC<Props> = ({ items }) => {
         return (
           <div className="movie-card" key={item.title}>
             <div className="movie-card__image">
-              <img src={item.img} alt="Movie" />
+              <img src={item.posterURLs[185]} alt="Movie" />
             </div>
             <div className="movie-card__content">
               <div className="movie-card__title">
-                {decodeString(item.title)}
+                {removeHashAtBeginning(decodeString(item.title))}
               </div>
               <div className="movie-card__info">
                 <div className="movie-card__info-year-runtime">
@@ -33,7 +33,8 @@ const Card: FC<Props> = ({ items }) => {
                   </div>
                 </div>
                 <div className="movie-card-rating">
-                  <img src={starIcon} alt="Icon star" /> {item.rating || "?"}
+                  <img src={starIcon} alt="Icon star" />{" "}
+                  {item.imdbRating / 10 || "?"}
                 </div>
               </div>
             </div>

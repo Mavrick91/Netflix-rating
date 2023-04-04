@@ -44,3 +44,35 @@ main {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.category-page-container {
+  width: 1400px;
+  margin: 54px auto;
+}
+
+.category-filter-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+.category-filter-form div:nth-child(1) {
+  flex-grow: 1;
+}
+
+.category-filter-form div:nth-child(2) {
+  flex-grow: 2;
+}
+
+.category-filter-form div:nth-child(3) {
+  flex-grow: 10;
+}
+
+.category-filter-form div:nth-child(4) {
+  flex-grow: 50;
+}
+
+.category-filter-form div:nth-child(5) {
+  flex-grow: 1;
+}

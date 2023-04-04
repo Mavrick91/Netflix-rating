@@ -1,8 +1,5 @@
-export function convertRuntimeToHoursAndMinutes(
-  runtimeInSecondsString: string
-) {
-  const runtimeInSeconds = parseInt(runtimeInSecondsString, 10);
-  const hours = Math.floor(runtimeInSeconds / 3600);
-  const minutes = Math.floor((runtimeInSeconds % 3600) / 60);
+export function convertRuntimeToHoursAndMinutes(runtimeInMinutes: number) {
+  const hours = Math.floor(runtimeInMinutes / 60);
+  const minutes = runtimeInMinutes % 60;
   return `${hours}h ${minutes}m`;
 }

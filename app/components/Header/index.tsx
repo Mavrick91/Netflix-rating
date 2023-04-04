@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import starIcon from "~/assets/icons/star.png";
 import styles from "~/styles/header.css";
 
@@ -10,19 +9,8 @@ const Header = () => {
       <div className="mask" />
       <div className="header-content">
         <div className="logo">
-          <img src={starIcon} alt="Icon star" />{" "}
-          <Link to="/">Netflix Rating</Link>
+          <img src={starIcon} alt="Icon star" /> <span>Netflix Rating</span>
         </div>
-        <nav className="header-title">
-          <ul>
-            <li>
-              <Link to="/movies">Movies</Link>
-            </li>
-            <li>
-              <Link to="/show-tv">Show TV</Link>
-            </li>
-          </ul>
-        </nav>
       </div>
     </header>
   );
