@@ -89,6 +89,11 @@ const Index = () => {
                 items={genresShow}
                 defaultValue="us"
               />
+              <Text
+                label="Find by keyword"
+                name="keyword"
+                placeholder="Search shows by keyword"
+              />
               <Button type="submit">Filter</Button>
               <Button type="reset">
                 <img src={undoArrow} alt="Icon undo" />

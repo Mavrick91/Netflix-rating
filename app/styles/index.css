@@ -82,6 +82,10 @@ main {
 }
 
 .category-filter-form div:nth-child(7) {
+  flex-grow: 1;
+}
+
+.category-filter-form div:nth-child(8) {
   flex-grow: 50;
 }
 
