@@ -59,7 +59,7 @@ const Index = () => {
             </h1>
           </div>
 
-          <div className="category-page-container">
+          <div className="shows-page-container">
             <FilterForm />
             <Card items={shows} />
           </div>
