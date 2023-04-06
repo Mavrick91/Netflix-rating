@@ -1,6 +1,7 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import customFetch from "~/api/fetch";
+import React from "react";
+import { getShows } from "~/api/getShows";
 import { links as buttonLinks } from "~/components/Button";
 import Card, { links as cardLinks } from "~/components/Card";
 import FilterForm, { links as filterFormLinks } from "~/components/FilterForm";
@@ -10,7 +11,6 @@ import { links as textLinks } from "~/components/input/Text";
 import { links as modalLinks } from "~/components/Modal";
 import styles from "~/styles/index.css";
 import type { MoviesSeries } from "~/types/moviesSeries";
-import { createQueryParams, getQueryStringsFromUrl } from "~/utils/object";
 
 export const links = () => [
   ...headerLinks(),
@@ -29,29 +29,24 @@ type LoaderData = {
   nextCursor: string;
 };
 
-const defaultQueryString = {
-  country: "us",
-  services: "netflix,prime.buy,hulu",
-};
-
 export const loader = async ({ request }: LoaderArgs) => {
-  const queryParams = getQueryStringsFromUrl(request.url);
-  const queryString = createQueryParams({
-    ...defaultQueryString,
-    ...queryParams,
-  });
+  const data: LoaderData = await getShows(request);
 
-  const response = await customFetch(`/search/basic?${queryString}`);
-  if (!response.ok) {
-    throw new Error("Could not fetch data");
+  if (data.hasMore) {
+    const decodedNextCursor = encodeURIComponent(data.nextCursor);
+    const dataNextPage: LoaderData = await getShows(request, decodedNextCursor);
+    return {
+      ...dataNextPage,
+      result: [...data.result, ...dataNextPage.result],
+    };
   }
 
-  return await response.json();
+  return data;
 };
 
 const Index = () => {
   const data = useLoaderData<LoaderData>();
-  console.log("🚀 ~ data:", data);
+  const [shows] = React.useState<MoviesSeries[]>(data.result);
 
   return (
     <>
@@ -66,7 +61,7 @@ const Index = () => {
 
           <div className="category-page-container">
             <FilterForm />
-            <Card items={data.result} />
+            <Card items={shows} />
           </div>
         </section>
       </main>
