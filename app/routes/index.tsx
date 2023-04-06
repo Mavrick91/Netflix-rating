@@ -5,7 +5,6 @@ import undoArrow from "~/assets/icons/undo-arrow.png";
 import Button, { links as buttonLinks } from "~/components/Button";
 import Card, { links as cardLinks } from "~/components/Card";
 import Header, { links as headerLinks } from "~/components/Header";
-import Select, { links as selectLinks } from "~/components/input/Select";
 import Text, { links as textLinks } from "~/components/input/Text";
 import {
   genresShow,
@@ -17,6 +16,7 @@ import styles from "~/styles/index.css";
 import type { MoviesSeries } from "~/types/moviesSeries";
 import { createQueryParams, getQueryStringsFromUrl } from "~/utils/object";
 import { links as modalLinks } from "~/components/Modal";
+import Select, { links as selectLinks } from "~/components/input/Select";
 
 export const links = () => [
   ...headerLinks(),
@@ -33,6 +33,7 @@ type LoaderData = {
   hasMore: boolean;
   nextCursor: string;
 };
+
 export const loader = async ({ request }: LoaderArgs) => {
   const queryParams = getQueryStringsFromUrl(request.url);
   const queryString = createQueryParams({
@@ -66,40 +67,39 @@ const Index = () => {
 
           <div className="category-page-container">
             <Form className="category-filter-form">
-              <Select
-                label="Type"
-                name="show_type"
-                items={showTypes}
-                defaultValue={showTypes[0].value}
-              />
+              <Select label="Type" name="show_type" items={showTypes} />
               <Select
                 label="Language"
                 name="show_original_language"
-                defaultValue={languageShow[0].value}
                 items={languageShow}
               />
               <Select
                 label="Available in country"
                 name="country"
                 items={supportedCountries}
-                defaultValue="us"
               />
-              <Select
-                label="Genre"
-                name="genre"
-                items={genresShow}
-                defaultValue="us"
-              />
+              <Select label="Genre" name="genre" items={genresShow} />
               <Text
                 label="Find by keyword"
                 name="keyword"
                 placeholder="Search shows by keyword"
               />
+              <Select
+                label="Choose the platforms"
+                items={platformsShow}
+                max={4}
+                name="services"
+                value={[
+                  platformsShow[2],
+                  platformsShow[3],
+                  platformsShow[4],
+                  platformsShow[6],
+                ]}
+              />
               <Button type="submit">Filter</Button>
               <Button type="reset">
                 <img src={undoArrow} alt="Icon undo" />
               </Button>
-              <div />
             </Form>
             <Card items={data.result} />
           </div>
