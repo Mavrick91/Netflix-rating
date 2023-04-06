@@ -1,7 +1,10 @@
+import { decodeString } from "./string";
+
 export function createQueryParams(params: Record<string, string>) {
   const searchParams = new URLSearchParams(params);
   const queryString = searchParams.toString();
-  return queryString;
+
+  return decodeString(queryString);
 }
 
 export function getQueryStringsFromUrl(url: string) {
@@ -10,7 +13,8 @@ export function getQueryStringsFromUrl(url: string) {
   const queryStrings = Array.from(searchParams.entries()).reduce(
     (acc, [key, value]) => {
       if (value) {
-        acc[key] = value;
+        if (acc[key]) acc[key] += `,${value}`;
+        else acc[key] = value;
       }
       return acc;
     },
