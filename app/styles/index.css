@@ -49,38 +49,3 @@ main {
   width: 1400px;
   margin: 54px auto;
 }
-
-.category-filter-form {
-  display: flex;
-  align-items: flex-end;
-  gap: 16px;
-  margin-bottom: 56px;
-}
-
-.category-filter-form > div:nth-child(1) {
-  width: 95px;
-}
-
-.category-filter-form > div:nth-child(2) {
-  width: 120px;
-}
-
-.category-filter-form > div:nth-child(3) {
-  width: 200px;
-}
-
-.category-filter-form > div:nth-child(4) {
-  width: 145px;
-}
-
-.category-filter-form > div:nth-child(5) {
-  width: 220px;
-}
-
-.category-filter-form > div:nth-child(6) {
-  width: 230px;
-}
-
-button img {
-  width: 16px;
-}
