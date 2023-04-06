@@ -9,7 +9,8 @@ const Header = () => {
       <div className="mask" />
       <div className="header-content">
         <div className="logo">
-          <img src={starIcon} alt="Icon star" /> <span>Netflix Rating</span>
+          <img src={starIcon} alt="Icon star" />{" "}
+          <span>Movies and Series Rating</span>
         </div>
       </div>
     </header>
