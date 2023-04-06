@@ -35,11 +35,15 @@ type LoaderData = {
   nextCursor: string;
 };
 
+const defaultQueryString = {
+  country: "us",
+  services: "netflix,prime.buy,hulu",
+};
+
 export const loader = async ({ request }: LoaderArgs) => {
   const queryParams = getQueryStringsFromUrl(request.url);
   const queryString = createQueryParams({
-    country: "us",
-    services: "netflix,prime.buy,hulu",
+    ...defaultQueryString,
     ...queryParams,
   });
 
