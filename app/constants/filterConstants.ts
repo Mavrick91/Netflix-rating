@@ -33,7 +33,7 @@ export const supportedCountries = [
 ];
 
 export const showTypes = [
-  { value: "all", label: "All" },
+  { value: "", label: "All" },
   { value: "movie", label: "Movie" },
   { value: "series", label: "Series" },
 ];
@@ -82,4 +82,14 @@ export const genresShow = [
   { value: 878, label: "Science Fiction" },
   { value: 9648, label: "Mystery" },
   { value: 99, label: "Documentary" },
+];
+
+export const platformsShow = [
+  { value: "apple", label: "Apple" },
+  { value: "disney", label: "Disney" },
+  { value: "hbo", label: "HBO" },
+  { value: "hulu", label: "Hulu" },
+  { value: "netflix", label: "Netflix" },
+  { value: "peacock", label: "Peacock" },
+  { value: "prime", label: "Prime" },
 ];

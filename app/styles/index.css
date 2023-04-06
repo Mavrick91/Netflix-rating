@@ -57,36 +57,28 @@ main {
   margin-bottom: 56px;
 }
 
-.category-filter-form div:nth-child(1) {
-  flex-grow: 1;
+.category-filter-form > div:nth-child(1) {
+  width: 95px;
 }
 
-.category-filter-form div:nth-child(2) {
-  flex-grow: 2;
+.category-filter-form > div:nth-child(2) {
+  width: 120px;
 }
 
-.category-filter-form div:nth-child(3) {
-  flex-grow: 5;
+.category-filter-form > div:nth-child(3) {
+  width: 200px;
 }
 
-.category-filter-form div:nth-child(4) {
-  flex-grow: 1;
+.category-filter-form > div:nth-child(4) {
+  width: 145px;
 }
 
-.category-filter-form div:nth-child(5) {
-  flex-grow: 1;
+.category-filter-form > div:nth-child(5) {
+  width: 220px;
 }
 
-.category-filter-form div:nth-child(6) {
-  flex-grow: 1;
-}
-
-.category-filter-form div:nth-child(7) {
-  flex-grow: 1;
-}
-
-.category-filter-form div:nth-child(8) {
-  flex-grow: 50;
+.category-filter-form > div:nth-child(6) {
+  width: 230px;
 }
 
 button img {

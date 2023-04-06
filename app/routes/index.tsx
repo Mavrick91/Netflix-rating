@@ -9,6 +9,7 @@ import Text, { links as textLinks } from "~/components/input/Text";
 import {
   genresShow,
   languageShow,
+  platformsShow,
   showTypes,
   supportedCountries,
 } from "~/constants/filterConstants";
