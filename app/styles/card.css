@@ -79,7 +79,7 @@
 }
 
 .movie-card__image {
-  min-height: 317px;
+  height: 317px;
   overflow: hidden;
   position: relative;
 }
