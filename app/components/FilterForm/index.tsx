@@ -1,4 +1,5 @@
 import { Form, Link, useSearchParams } from "@remix-run/react";
+import type { FC } from "react";
 import React, { memo, useCallback } from "react";
 import undoArrow from "~/assets/icons/undo-arrow.png";
 import Button from "~/components/Button";
@@ -16,7 +17,11 @@ import styles from "~/styles/filterForm.css";
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
-const FilterForm = () => {
+type Props = {
+  cancelQueries: () => void;
+};
+
+const FilterForm: FC<Props> = ({ cancelQueries }) => {
   const [searchParams] = useSearchParams();
 
   const findDefaultValue = useCallback(
@@ -80,7 +85,9 @@ const FilterForm = () => {
           ]
         }
       />
-      <Button type="submit">Filter</Button>
+      <Button type="submit" onClick={cancelQueries}>
+        Filter
+      </Button>
       <Link to="/" prefetch="render">
         <Button type="button">
           <img src={undoArrow} alt="Icon undo" />

@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import styles from "./global.css";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
@@ -17,6 +18,8 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
+const queryClient = new QueryClient();
+
 export default function App() {
   return (
     <html lang="en">
@@ -25,7 +28,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
         <ScrollRestoration
           getKey={(location) => {
             return location.pathname;

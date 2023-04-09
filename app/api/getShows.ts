@@ -16,11 +16,8 @@ type Params = {
   cursor?: string;
   keyword?: string;
 };
-export const getShows = async (
-  request: Request,
-  decodedNextCursor?: string
-) => {
-  const queryParams = getQueryStringsFromUrl(request.url);
+export const getShows = async (url: string, decodedNextCursor?: string) => {
+  const queryParams = getQueryStringsFromUrl(url);
   const params: Params = {
     ...defaultQueryString,
     ...queryParams,

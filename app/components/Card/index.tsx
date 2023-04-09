@@ -1,5 +1,9 @@
-import type { FC } from "react";
-import { useState } from "react";
+import type { Dispatch, FC, SetStateAction } from "react";
+import { useMemo, useState } from "react";
+import infoIcon from "~/assets/icons/info.png";
+import arrowBack from "~/assets/icons/left-arrow.png";
+import playIcon from "~/assets/icons/play-button.png";
+import arrowNext from "~/assets/icons/right-arrow.png";
 import starIcon from "~/assets/icons/star.png";
 import styles from "~/styles/card.css";
 import type { MoviesSeries } from "~/types/moviesSeries";
@@ -9,30 +13,54 @@ import {
   convertRuntimeToHoursAndMinutes,
 } from "~/utils/number";
 import { removeHashAtBeginning } from "~/utils/string";
-import infoIcon from "~/assets/icons/info.png";
-import playIcon from "~/assets/icons/play-button.png";
-import VideoPlayer from "../VideoPlayer";
 import Modal from "../Modal";
-import arrowBack from "~/assets/icons/left-arrow.png";
-import arrowNext from "~/assets/icons/right-arrow.png";
+import VideoPlayer from "../VideoPlayer";
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
 type Props = {
   items: MoviesSeries[];
+  setPage: Dispatch<SetStateAction<number>>;
+  hasNextPage: boolean;
+  page: number;
 };
 
-const Card: FC<Props> = ({ items }) => {
+const Card: FC<Props> = ({ items, setPage, hasNextPage, page }) => {
   const [trailerUrl, setTrailerUrl] = useState("");
+
+  const buttonPrevious = useMemo(() => {
+    if (page === 1) return null;
+
+    return (
+      <button
+        type="button"
+        onClick={() => setPage((prevPage) => prevPage - 1)}
+        className="arrow arrow-back"
+      >
+        <img src={arrowBack} alt="Play" />
+      </button>
+    );
+  }, [page, setPage]);
+
+  const buttonNext = useMemo(() => {
+    if (hasNextPage) {
+      return (
+        <button
+          type="button"
+          onClick={() => setPage((prevPage) => prevPage + 1)}
+          className="arrow arrow-next"
+        >
+          <img src={arrowNext} alt="Play" />
+        </button>
+      );
+    }
+    return null;
+  }, [hasNextPage, setPage]);
 
   return (
     <div className="container-shows">
-      <div className="arrow arrow-back">
-        <img src={arrowBack} alt="Play" />
-      </div>
-      <div className="arrow arrow-next">
-        <img src={arrowNext} alt="Play" />
-      </div>
+      {buttonPrevious}
+      {buttonNext}
       <div className="inner-shows">
         {items.map((item) => {
           let runtime = null;
@@ -45,7 +73,7 @@ const Card: FC<Props> = ({ items }) => {
             )}`;
 
           return (
-            <div className="movie-card" key={item.title}>
+            <div className="movie-card" key={item.imdbId}>
               <div className="movie-card__image">
                 <img src={item.posterURLs[185]} alt="Movie" />
                 <div className="movie-card__image--hover">

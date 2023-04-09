@@ -1,6 +1,7 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import React from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useQueryClient } from "react-query";
 import { getShows } from "~/api/getShows";
 import { links as buttonLinks } from "~/components/Button";
 import Card, { links as cardLinks } from "~/components/Card";
@@ -29,24 +30,76 @@ type LoaderData = {
   nextCursor: string;
 };
 
-export const loader = async ({ request }: LoaderArgs) => {
-  const data: LoaderData = await getShows(request);
-
+const fetch2PagesPer2Pages = async (url: string, nextCursor?: string) => {
+  const data: LoaderData = await getShows(url, nextCursor);
   if (data.hasMore) {
     const decodedNextCursor = encodeURIComponent(data.nextCursor);
-    const dataNextPage: LoaderData = await getShows(request, decodedNextCursor);
+    const dataNextPage: LoaderData = await getShows(url, decodedNextCursor);
     return {
       ...dataNextPage,
       result: [...data.result, ...dataNextPage.result],
     };
   }
-
   return data;
 };
 
+export const loader = async ({ request }: LoaderArgs) => {
+  return fetch2PagesPer2Pages(request.url);
+};
+
 const Index = () => {
-  const data = useLoaderData<LoaderData>();
-  const [shows] = React.useState<MoviesSeries[]>(data.result);
+  const dataFromServer = useLoaderData<LoaderData>();
+  const [data, setData] = useState<LoaderData>(dataFromServer);
+  const [page, setPage] = useState(1);
+
+  const queryClient = useQueryClient();
+
+  const prefetchShows = useCallback(async () => {
+    await queryClient.prefetchQuery({
+      queryKey: [data.nextCursor],
+      queryFn: () =>
+        fetch2PagesPer2Pages(window.location.href, data.nextCursor).then(
+          (res: LoaderData) => {
+            setData((prevData: any) => {
+              return {
+                result: [...prevData.result, ...res.result],
+                hasMore: res.hasMore,
+                nextCursor: res.nextCursor,
+              };
+            });
+          }
+        ),
+    });
+  }, [data.nextCursor, queryClient]);
+
+  const cancelPrefetch = useCallback(async () => {
+    await queryClient.cancelQueries();
+  }, [queryClient]);
+
+  useEffect(() => {
+    setData(dataFromServer);
+    setPage(1);
+  }, [dataFromServer]);
+
+  useEffect(() => {
+    if (data.hasMore) prefetchShows();
+  }, [data.hasMore, page, prefetchShows]);
+
+  const getShowsToDisplay = useMemo(() => {
+    const itemsPerPage = 12;
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return data.result.slice(startIndex, endIndex);
+  }, [data.result, page]);
+
+  const nextPageLength = useMemo(() => {
+    const itemsPerPage = 12;
+    const startIndex = page * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return data.result.slice(startIndex, endIndex).length;
+  }, [data.result, page]);
 
   return (
     <>
@@ -60,8 +113,13 @@ const Index = () => {
           </div>
 
           <div className="shows-page-container">
-            <FilterForm />
-            <Card items={shows} />
+            <FilterForm cancelQueries={cancelPrefetch} />
+            <Card
+              items={getShowsToDisplay}
+              setPage={setPage}
+              hasNextPage={nextPageLength >= 1}
+              page={page}
+            />
           </div>
         </section>
       </main>
