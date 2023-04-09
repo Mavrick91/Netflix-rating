@@ -1,14 +1,18 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import type { FC } from "react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Fragment, useCallback, useState } from "react";
 
 import styles from "~/styles/select.css";
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
-type Item = Record<string, string | number>;
+export type Item = {
+  value: string | number;
+  label: string;
+  isDefault?: boolean;
+};
 
 type Props = Omit<
   React.DetailedHTMLProps<
@@ -27,9 +31,20 @@ const findItem = (items: Item[], value: string) =>
   items.find((item) => item.value === value);
 
 const Select: FC<Props> = ({ max, label, items, name, value }) => {
+  const [prevValue, setPrevValue] = useState<Item[]>();
   const [arrSelected, setArrSelected] = useState<Item[]>(
     value ? value : [items[0]]
   );
+
+  useEffect(() => {
+    if (
+      prevValue?.[0].value === value?.[0].value &&
+      prevValue?.length === value?.length
+    )
+      return;
+    setArrSelected(value ? value : [items[0]]);
+    setPrevValue(value);
+  }, [items, prevValue, value]);
 
   const activeOptionClass = "listbox-option-active";
 

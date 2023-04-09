@@ -1,5 +1,5 @@
 export const supportedCountries = [
-  { value: "us", label: "United States" },
+  { value: "us", label: "United States", isDefault: true },
   { value: "gb", label: "United Kingdom" },
   { value: "au", label: "Australia" },
   { value: "ca", label: "Canada" },
@@ -33,12 +33,12 @@ export const supportedCountries = [
 ];
 
 export const showTypes = [
-  { value: "", label: "All" },
+  { value: "", label: "All", isDefault: true },
   { value: "movie", label: "Movie" },
   { value: "series", label: "Series" },
 ];
 export const languageShow = [
-  { value: "", label: "All" },
+  { value: "", label: "All", isDefault: true },
   { value: "en", label: "English" },
   { value: "sp", label: "Spanish" },
   { value: "fr", label: "French" },
@@ -53,7 +53,7 @@ export const languageShow = [
 ];
 
 export const genresShow = [
-  { value: "", label: "All" },
+  { value: "", label: "All", isDefault: true },
   { value: 1, label: "Biography" },
   { value: 10402, label: "Music" },
   { value: 10749, label: "Romance" },
@@ -85,11 +85,11 @@ export const genresShow = [
 ];
 
 export const platformsShow = [
-  { value: "apple", label: "Apple" },
+  { value: "apple", label: "Apple", isDefault: true },
+  { value: "prime", label: "Prime", isDefault: true },
+  { value: "hbo", label: "HBO", isDefault: true },
+  { value: "netflix", label: "Netflix", isDefault: true },
   { value: "disney", label: "Disney" },
-  { value: "hbo", label: "HBO" },
   { value: "hulu", label: "Hulu" },
-  { value: "netflix", label: "Netflix" },
   { value: "peacock", label: "Peacock" },
-  { value: "prime", label: "Prime" },
 ];

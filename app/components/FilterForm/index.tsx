@@ -1,7 +1,8 @@
-import { Form } from "@remix-run/react";
-import React from "react";
+import { Form, Link, useSearchParams } from "@remix-run/react";
+import React, { memo, useCallback } from "react";
 import undoArrow from "~/assets/icons/undo-arrow.png";
 import Button from "~/components/Button";
+import type { Item } from "~/components/input/Select";
 import Select from "~/components/input/Select";
 import Text from "~/components/input/Text";
 import {
@@ -16,43 +17,77 @@ import styles from "~/styles/filterForm.css";
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
 const FilterForm = () => {
+  const [searchParams] = useSearchParams();
+
+  const findDefaultValue = useCallback(
+    (items: Item[], queryString: string) => {
+      const param = searchParams.getAll(queryString);
+
+      if (param.length >= 1) {
+        const itemsFound = items.filter((item) =>
+          param.includes(`${item.value}`)
+        );
+        if (itemsFound.length >= 1) return itemsFound;
+      }
+      return items.filter((item) => item.isDefault);
+    },
+    [searchParams]
+  );
+
   return (
     <Form className="category-filter-form">
-      <Select label="Type" name="show_type" items={showTypes} />
+      <Select
+        label="Type"
+        name="show_type"
+        items={showTypes}
+        value={findDefaultValue(showTypes, "show_type")}
+      />
       <Select
         label="Language"
         name="show_original_language"
         items={languageShow}
+        value={findDefaultValue(languageShow, "show_original_language")}
       />
       <Select
         label="Available in country"
         name="country"
         items={supportedCountries}
+        value={findDefaultValue(supportedCountries, "country")}
       />
-      <Select label="Genre" name="genre" items={genresShow} />
+      <Select
+        label="Genre"
+        name="genre"
+        items={genresShow}
+        value={findDefaultValue(genresShow, "genre")}
+      />
       <Text
         label="Find by keyword"
         name="keyword"
         placeholder="Search shows by keyword"
+        defaultValue={searchParams.get("keyword") || ""}
       />
       <Select
         label="Choose the platforms"
         items={platformsShow}
         max={4}
         name="services"
-        value={[
-          platformsShow[2],
-          platformsShow[3],
-          platformsShow[4],
-          platformsShow[6],
-        ]}
+        value={
+          findDefaultValue(platformsShow, "services") || [
+            platformsShow[2],
+            platformsShow[3],
+            platformsShow[4],
+            platformsShow[6],
+          ]
+        }
       />
       <Button type="submit">Filter</Button>
-      <Button type="reset">
-        <img src={undoArrow} alt="Icon undo" />
-      </Button>
+      <Link to="/" prefetch="render">
+        <Button type="button">
+          <img src={undoArrow} alt="Icon undo" />
+        </Button>
+      </Link>
     </Form>
   );
 };
 
-export default FilterForm;
+export default memo(FilterForm);
