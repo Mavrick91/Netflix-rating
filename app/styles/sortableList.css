@@ -1,0 +1,14 @@
+.container-sortable {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-bottom: 26px;
+}
+
+.container-sortable > div:nth-child(1) {
+    width: 135px;
+}
+
+.container-sortable > div:nth-child(2) {
+    width: 135px;
+}

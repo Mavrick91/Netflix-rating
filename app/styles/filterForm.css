@@ -2,7 +2,7 @@
     display: flex;
     align-items: flex-end;
     gap: 16px;
-    margin-bottom: 56px;
+    margin-bottom: 26px;
 }
 
 .category-filter-form > div:nth-child(1) {
@@ -10,15 +10,15 @@
 }
 
 .category-filter-form > div:nth-child(2) {
-    width: 120px;
+    width: 140px;
 }
 
 .category-filter-form > div:nth-child(3) {
-    width: 200px;
+    width: 210px;
 }
 
 .category-filter-form > div:nth-child(4) {
-    width: 165px;
+    width: 175px;
 }
 
 .category-filter-form > div:nth-child(5) {
@@ -26,7 +26,7 @@
 }
 
 .category-filter-form > div:nth-child(6) {
-    width: 230px;
+    width: 250px;
 }
 
 button img {

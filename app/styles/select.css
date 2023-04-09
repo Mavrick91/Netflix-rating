@@ -18,11 +18,10 @@
   display: block;
   width: 100%;
   height: 100%;
-  padding: 10px 30px 10px 10px;
+  padding: 10px 50px 10px 10px;
   font-weight: normal;
   line-height: 1.5;
   text-align: left;
-  color: #111827;
   background-color: #151621;
   border-radius: 4px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -30,6 +29,9 @@
   color: white;
   position: relative;
   border: 1px solid #313248;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .listbox-button:hover {
@@ -53,13 +55,17 @@
   z-index: 340;
   top: 100%;
   left: 0;
-  width: 100%;
   margin-top: 5px;
   border-radius: 4px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  max-height: 200px;
+  max-height: 400px;
   overflow-y: auto;
   background-color: #151621;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  width: fit-content;
+  min-width: 200%;
 }
 
 .listbox-option {

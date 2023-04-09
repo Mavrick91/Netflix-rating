@@ -48,4 +48,6 @@ main {
 .shows-page-container {
   width: 1400px;
   margin: 54px auto;
+  display: flex;
+  flex-direction: column;
 }

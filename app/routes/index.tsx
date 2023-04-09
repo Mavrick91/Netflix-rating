@@ -10,6 +10,9 @@ import Header, { links as headerLinks } from "~/components/Header";
 import { links as selectLinks } from "~/components/input/Select";
 import { links as textLinks } from "~/components/input/Text";
 import { links as modalLinks } from "~/components/Modal";
+import SortableList, {
+  links as sortableLinks,
+} from "~/components/SortableList";
 import styles from "~/styles/index.css";
 import type { MoviesSeries } from "~/types/moviesSeries";
 
@@ -21,6 +24,7 @@ export const links = () => [
   ...cardLinks(),
   ...modalLinks(),
   ...filterFormLinks(),
+  ...sortableLinks(),
   { rel: "stylesheet", href: styles },
 ];
 
@@ -28,6 +32,11 @@ type LoaderData = {
   result: MoviesSeries[];
   hasMore: boolean;
   nextCursor: string;
+};
+
+export type SoterOptions = {
+  year: number[];
+  other: string;
 };
 
 const fetch2PagesPer2Pages = async (url: string, nextCursor?: string) => {
@@ -51,7 +60,10 @@ const Index = () => {
   const dataFromServer = useLoaderData<LoaderData>();
   const [data, setData] = useState<LoaderData>(dataFromServer);
   const [page, setPage] = useState(1);
-
+  const [sorterOptions, setSorterOptions] = useState<SoterOptions>({
+    year: [],
+    other: "",
+  });
   const queryClient = useQueryClient();
 
   const prefetchShows = useCallback(async () => {
@@ -85,21 +97,49 @@ const Index = () => {
     if (data.hasMore) prefetchShows();
   }, [data.hasMore, page, prefetchShows]);
 
+  const sortShows = useMemo(() => {
+    let sortedShows = data.result;
+
+    if (sorterOptions.year.length > 0) {
+      sortedShows = data.result.filter((show) => {
+        return sorterOptions.year.includes(show.year);
+      });
+    }
+
+    if (sorterOptions.other) {
+      if (sorterOptions.other === "originalTitle")
+        sortedShows = sortedShows.sort((a, b) => {
+          return a.originalTitle.localeCompare(b.originalTitle);
+        });
+      if (sorterOptions.other === "imdbRating") {
+        sortedShows = sortedShows.sort((a, b) => {
+          return b.imdbRating - a.imdbRating;
+        });
+      }
+      if (sorterOptions.other === "imdbVoteCount") {
+        sortedShows = sortedShows.sort((a, b) => {
+          return b.imdbVoteCount - a.imdbVoteCount;
+        });
+      }
+    }
+    return sortedShows;
+  }, [data.result, sorterOptions.other, sorterOptions.year]);
+
   const getShowsToDisplay = useMemo(() => {
     const itemsPerPage = 12;
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    return data.result.slice(startIndex, endIndex);
-  }, [data.result, page]);
+    return sortShows.slice(startIndex, endIndex);
+  }, [sortShows, page]);
 
   const nextPageLength = useMemo(() => {
     const itemsPerPage = 12;
     const startIndex = page * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    return data.result.slice(startIndex, endIndex).length;
-  }, [data.result, page]);
+    return sortShows.slice(startIndex, endIndex).length;
+  }, [page, sortShows]);
 
   return (
     <>
@@ -114,12 +154,15 @@ const Index = () => {
 
           <div className="shows-page-container">
             <FilterForm cancelQueries={cancelPrefetch} />
-            <Card
-              items={getShowsToDisplay}
-              setPage={setPage}
-              hasNextPage={nextPageLength >= 1}
-              page={page}
-            />
+            <div>
+              <SortableList setSorterOptions={setSorterOptions} />
+              <Card
+                items={getShowsToDisplay}
+                setPage={setPage}
+                hasNextPage={nextPageLength >= 1}
+                page={page}
+              />
+            </div>
           </div>
         </section>
       </main>
