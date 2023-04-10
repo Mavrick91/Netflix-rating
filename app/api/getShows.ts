@@ -16,7 +16,14 @@ type Params = {
   cursor?: string;
   keyword?: string;
 };
-export const getShows = async (url: string, decodedNextCursor?: string) => {
+export const getShows = async (
+  url: string,
+  decodedNextCursor?: string,
+  signal?: AbortSignal
+) => {
+  const options: RequestInit = {
+    signal,
+  };
   const queryParams = getQueryStringsFromUrl(url);
   const params: Params = {
     ...defaultQueryString,
@@ -28,7 +35,7 @@ export const getShows = async (url: string, decodedNextCursor?: string) => {
 
   const queryString = createQueryParams(params);
 
-  const response = await customFetch(`/search/basic?${queryString}`);
+  const response = await customFetch(`/search/basic?${queryString}`, options);
 
   if (!response.ok) {
     throw new Error("Could not fetch data");

@@ -43,11 +43,19 @@ export type SoterOptions = {
   other: string;
 };
 
-const fetch2PagesPer2Pages = async (url: string, nextCursor?: string) => {
-  const data: LoaderData = await getShows(url, nextCursor);
+const fetch2PagesPer2Pages = async (
+  url: string,
+  nextCursor?: string,
+  signal?: AbortSignal
+) => {
+  const data: LoaderData = await getShows(url, nextCursor, signal);
   if (data.hasMore) {
     const decodedNextCursor = encodeURIComponent(data.nextCursor);
-    const dataNextPage: LoaderData = await getShows(url, decodedNextCursor);
+    const dataNextPage: LoaderData = await getShows(
+      url,
+      decodedNextCursor,
+      signal
+    );
     return {
       ...dataNextPage,
       result: [...data.result, ...dataNextPage.result],
@@ -73,18 +81,20 @@ const Index = () => {
   const prefetchShows = useCallback(async () => {
     await queryClient.prefetchQuery({
       queryKey: [data.nextCursor],
-      queryFn: () =>
-        fetch2PagesPer2Pages(window.location.href, data.nextCursor).then(
-          (res: LoaderData) => {
-            setData((prevData: any) => {
-              return {
-                result: [...prevData.result, ...res.result],
-                hasMore: res.hasMore,
-                nextCursor: res.nextCursor,
-              };
-            });
-          }
-        ),
+      queryFn: ({ signal }) =>
+        fetch2PagesPer2Pages(
+          window.location.href,
+          data.nextCursor,
+          signal
+        ).then((res: LoaderData) => {
+          setData((prevData: any) => {
+            return {
+              result: [...prevData.result, ...res.result],
+              hasMore: res.hasMore,
+              nextCursor: res.nextCursor,
+            };
+          });
+        }),
     });
   }, [data.nextCursor, queryClient]);
 
