@@ -145,6 +145,7 @@
 }
 
 .movie-card__title {
+  text-align: left;
   font-size: 0.75rem;
   font-weight: 700;
   white-space: nowrap;

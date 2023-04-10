@@ -1,8 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
+
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
 
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
+:root {
+  --header-height: 56px;
+}
 
 /* Set box-sizing to border-box for all elements */
 *,
@@ -35,7 +39,6 @@ li,
 pre,
 code,
 address,
-variable,
 form,
 fieldset,
 blockquote {

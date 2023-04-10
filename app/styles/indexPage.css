@@ -1,0 +1,25 @@
+.radial-background {
+    overflow-x: hidden;
+    margin-top: calc(-1 * var(--header-height));
+    padding-top: var(--header-height);
+    background: radial-gradient(
+            ellipse 90% 50% at 50% -20%,
+            rgba(120, 119, 198, 0.4),
+            transparent
+    );
+    height: 100vh;
+    position: absolute;
+    inset: 0;
+}
+
+.centered-heading-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 68px;
+    margin-bottom: 68px;
+}
+
+.shows-page-container {
+    display: flex;
+    flex-direction: column;
+}

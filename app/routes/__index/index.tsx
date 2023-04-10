@@ -6,18 +6,19 @@ import { getShows } from "~/api/getShows";
 import { links as buttonLinks } from "~/components/Button";
 import Card, { links as cardLinks } from "~/components/Card";
 import FilterForm, { links as filterFormLinks } from "~/components/FilterForm";
-import Header, { links as headerLinks } from "~/components/Header";
+import GradientHeader, {
+  links as gradientHeaderLinks,
+} from "~/components/GradientHeader";
 import { links as selectLinks } from "~/components/input/Select";
 import { links as textLinks } from "~/components/input/Text";
 import { links as modalLinks } from "~/components/Modal";
 import SortableList, {
   links as sortableLinks,
 } from "~/components/SortableList";
-import styles from "~/styles/index.css";
+import styles from "~/styles/indexPage.css";
 import type { MoviesSeries } from "~/types/moviesSeries";
 
 export const links = () => [
-  ...headerLinks(),
   ...buttonLinks(),
   ...textLinks(),
   ...selectLinks(),
@@ -25,6 +26,7 @@ export const links = () => [
   ...modalLinks(),
   ...filterFormLinks(),
   ...sortableLinks(),
+  ...gradientHeaderLinks(),
   { rel: "stylesheet", href: styles },
 ];
 
@@ -143,29 +145,26 @@ const Index = () => {
 
   return (
     <>
-      <Header />
-      <main>
-        <section className="inner-container">
-          <div className="centered-heading-container">
-            <h1 className="heading">
-              The Ultimate Movie Rating Database and Review Site
-            </h1>
-          </div>
+      <div className="radial-background" />
+      <section className="container">
+        <GradientHeader>
+          The Ultimate Movie Rating
+          <br /> Database and Review Site
+        </GradientHeader>
 
-          <div className="shows-page-container">
-            <FilterForm cancelQueries={cancelPrefetch} />
-            <div>
-              <SortableList setSorterOptions={setSorterOptions} />
-              <Card
-                items={getShowsToDisplay}
-                setPage={setPage}
-                hasNextPage={nextPageLength >= 1}
-                page={page}
-              />
-            </div>
+        <div className="shows-page-container">
+          <FilterForm cancelQueries={cancelPrefetch} />
+          <div>
+            <SortableList setSorterOptions={setSorterOptions} />
+            <Card
+              items={getShowsToDisplay}
+              setPage={setPage}
+              hasNextPage={nextPageLength >= 1}
+              page={page}
+            />
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
     </>
   );
 };
