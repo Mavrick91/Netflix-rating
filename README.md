@@ -2,7 +2,7 @@
 
 A simple Remix application that fetches and displays movie and series streaming availability information using the [Streaming Availability API](https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability) on RapidAPI.
 
-I am using the free version of the API, which limits the number of requests to 100 per day. If you want to use the application without any limitations, you can sign up for a paid plan on RapidAPI.
+I am using the free version of the API, which limits the number of requests to 100 per day.
 
 It also returns me only 8 results per request, that's why all the movies and series aren't loaded at once. But I instead prefetch them
 
