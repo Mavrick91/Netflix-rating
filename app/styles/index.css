@@ -1,3 +1,19 @@
+body {
+    min-height: 100vh;
+    background-color: rgb(0, 2, 18);
+}
+
+main {
+    height: 100%;
+}
+
+.container {
+    width: 1400px;
+    margin: 0 auto;
+    padding: 100px 0;
+    text-align: center;
+}
+
 .radial-background {
     overflow-x: hidden;
     margin-top: calc(-1 * var(--header-height));
