@@ -1,51 +1,78 @@
-# Welcome to Remix!
+# My Movie and Series Streaming Availability App
 
-- [Remix Docs](https://remix.run/docs)
+A simple Remix application that fetches and displays movie and series streaming availability information using the [Streaming Availability API](https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability) on RapidAPI.
 
-## Development
+I am using the free version of the API, which limits the number of requests to 100 per day. If you want to use the application without any limitations, you can sign up for a paid plan on RapidAPI.
 
-Start the Remix development asset server and the Express server by running:
+It also returns me only 8 results per request, that's why all the movies and series aren't loaded at once. But I instead prefetch them
 
-```sh
+## Table of Contents
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+
+## Features
+
+- Browse and search for movies and series
+- View streaming availability for multiple platforms
+- Clean and responsive user interface
+
+## Requirements
+
+- Node.js 14.x or higher
+- npm or yarn package manager
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/your-repository.git
+cd your-repository
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+or
+
+```bash
+yarn install
+```
+
+3. Create a `.env.local` file in the root directory of the project and add your RapidAPI key:
+
+```bash
+REACT_APP_RAPIDAPI_KEY=your_rapidapi_key
+```
+
+## Usage
+
+1. Start the development server:
+
+```bash
 npm run dev
 ```
 
-This starts your app in development mode, which will purge the server require cache when Remix rebuilds assets so you don't need a process manager restarting the express server.
+or
 
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
+```bash
+yarn dev
 ```
 
-Then run the app in production mode:
+2. Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
 
-```sh
-npm start
-```
+## Contributing
 
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying express applications you should be right at home just make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+1. Fork the repository on GitHub.
+2. Clone the forked repository to your local machine.
+3. Create a new branch for your feature or bugfix.
+4. Make your changes and commit them to your branch.
+5. Push your changes to your fork on GitHub.
+6. Create a pull request on the original repository.
