@@ -69,7 +69,7 @@ const FilterForm: FC<Props> = ({ cancelQueries }) => {
         label="Find by keyword"
         name="keyword"
         placeholder="Search shows by keyword"
-        defaultValue={searchParams.get("keyword") || ""}
+        value={searchParams.get("keyword") || ""}
       />
       <Select
         label="Choose the platforms"

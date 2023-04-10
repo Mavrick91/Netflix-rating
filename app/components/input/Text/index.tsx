@@ -12,7 +12,7 @@ type Props = React.DetailedHTMLProps<
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
 const Text: FC<Props> = ({ label, ...inputProps }) => {
-  const [value, setValue] = useState(inputProps.defaultValue || "");
+  const [value, setValue] = useState(inputProps.value || "");
 
   useEffect(() => {
     setValue(inputProps.defaultValue || "");
