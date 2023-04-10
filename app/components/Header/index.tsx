@@ -7,12 +7,11 @@ const Header = () => {
   return (
     <header className="header">
       <div className="mask" />
-      <div className="header-content">
+      <nav className="header-content">
         <div className="logo">
-          <img src={starIcon} alt="Icon star" />{" "}
-          <span>Movies and Series Rating</span>
+          <img src={starIcon} alt="Icon star" /> <span>Shows Rating</span>
         </div>
-      </div>
+      </nav>
     </header>
   );
 };
