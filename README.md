@@ -30,8 +30,8 @@ It also returns me only 8 results per request, that's why all the movies and ser
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/your-repository.git
-cd your-repository
+git clone https://github.com/Mavrick91/Shows-rating.git
+cd Shows-rating
 ```
 
 2. Install dependencies:
