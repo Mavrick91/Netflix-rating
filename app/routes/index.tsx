@@ -43,29 +43,18 @@ export type SoterOptions = {
   other: string;
 };
 
-const fetch2PagesPer2Pages = async (
+const fetchPage = async (
   url: string,
   nextCursor?: string,
   signal?: AbortSignal
 ) => {
-  const data: LoaderData = await getShows(url, nextCursor, signal);
-  if (data.hasMore) {
-    const decodedNextCursor = encodeURIComponent(data.nextCursor);
-    const dataNextPage: LoaderData = await getShows(
-      url,
-      decodedNextCursor,
-      signal
-    );
-    return {
-      ...dataNextPage,
-      result: [...data.result, ...dataNextPage.result],
-    };
-  }
+  const data: LoaderData = await getShows(url, nextCursor, { signal });
+
   return data;
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
-  return fetch2PagesPer2Pages(request.url);
+  return fetchPage(request.url);
 };
 
 const Index = () => {
@@ -82,19 +71,17 @@ const Index = () => {
     await queryClient.prefetchQuery({
       queryKey: [data.nextCursor],
       queryFn: ({ signal }) =>
-        fetch2PagesPer2Pages(
-          window.location.href,
-          data.nextCursor,
-          signal
-        ).then((res: LoaderData) => {
-          setData((prevData: any) => {
-            return {
-              result: [...prevData.result, ...res.result],
-              hasMore: res.hasMore,
-              nextCursor: res.nextCursor,
-            };
-          });
-        }),
+        fetchPage(window.location.href, data.nextCursor, signal).then(
+          (res: LoaderData) => {
+            setData((prevData: any) => {
+              return {
+                result: [...prevData.result, ...res.result],
+                hasMore: res.hasMore,
+                nextCursor: res.nextCursor,
+              };
+            });
+          }
+        ),
     });
   }, [data.nextCursor, queryClient]);
 
@@ -115,25 +102,23 @@ const Index = () => {
     let sortedShows = data.result;
 
     if (sorterOptions.year.length > 0) {
-      sortedShows = data.result.filter((show) => {
-        return sorterOptions.year.includes(show.year);
-      });
+      sortedShows = data.result.filter((show) =>
+        sorterOptions.year.includes(show.year)
+      );
     }
 
     if (sorterOptions.other) {
       if (sorterOptions.other === "originalTitle")
-        sortedShows = sortedShows.sort((a, b) => {
-          return a.originalTitle.localeCompare(b.originalTitle);
-        });
+        sortedShows = sortedShows.sort((a, b) =>
+          a.originalTitle.localeCompare(b.originalTitle)
+        );
       if (sorterOptions.other === "imdbRating") {
-        sortedShows = sortedShows.sort((a, b) => {
-          return b.imdbRating - a.imdbRating;
-        });
+        sortedShows = sortedShows.sort((a, b) => b.imdbRating - a.imdbRating);
       }
       if (sorterOptions.other === "imdbVoteCount") {
-        sortedShows = sortedShows.sort((a, b) => {
-          return b.imdbVoteCount - a.imdbVoteCount;
-        });
+        sortedShows = sortedShows.sort(
+          (a, b) => b.imdbVoteCount - a.imdbVoteCount
+        );
       }
     }
     return sortedShows;

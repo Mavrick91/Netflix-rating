@@ -19,11 +19,8 @@ type Params = {
 export const getShows = async (
   url: string,
   decodedNextCursor?: string,
-  signal?: AbortSignal
+  options?: RequestInit
 ) => {
-  const options: RequestInit = {
-    signal,
-  };
   const queryParams = getQueryStringsFromUrl(url);
   const params: Params = {
     ...defaultQueryString,
@@ -41,5 +38,5 @@ export const getShows = async (
     throw new Error("Could not fetch data");
   }
 
-  return await response.json();
+  return response.json();
 };
