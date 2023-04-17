@@ -1,7 +1,7 @@
 import type { Dispatch, FC, SetStateAction } from "react";
 import Select from "~/components/input/Select";
 import { sorterByDate, sorterByOthers } from "~/constants/sorterConstants";
-import type { SoterOptions } from "~/routes/__index/index";
+import type { SoterOptions } from "~/routes";
 import styles from "~/styles/sortableList.css";
 
 export const links = () => [{ rel: "stylesheet", href: styles }];

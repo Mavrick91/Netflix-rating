@@ -10,16 +10,11 @@ export function createQueryParams(params: Record<string, string>) {
 export function getQueryStringsFromUrl(url: string) {
   const urlObject = new URL(url);
   const searchParams = urlObject.searchParams;
-  const queryStrings = Array.from(searchParams.entries()).reduce(
-    (acc, [key, value]) => {
-      if (value) {
-        if (acc[key]) acc[key] += `,${value}`;
-        else acc[key] = value;
-      }
-      return acc;
-    },
-    {}
-  );
-
-  return queryStrings;
+  return Array.from(searchParams.entries()).reduce((acc, [key, value]) => {
+    if (value) {
+      if (acc[key]) acc[key] += `,${value}`;
+      else acc[key] = value;
+    }
+    return acc;
+  }, {} as Record<string, string>);
 }
